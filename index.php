@@ -1,5 +1,5 @@
 <?php
-include_once('config/vars.php');
+include_once('../../../tribe.init.php');
 $sql = new Wildfire\Core\MySQL();
 $dash = new Wildfire\Core\Dash();
 $types=$dash->get_types(ABSOLUTE_PATH.'/config/types.json');
