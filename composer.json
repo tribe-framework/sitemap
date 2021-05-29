@@ -1,3 +1,12 @@
 {
-    "name": "wildfire/sitemap"
+    "name": "wildfire/sitemap",
+    "repositories": {
+        "wildfire/core": {
+            "type": "git",
+            "url": "https://github.com/wil-ldf-ire/core.git"
+        }
+    },
+    "require": {
+    	"wildfire/core": "^1.1"
+    }
 }
