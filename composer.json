@@ -7,6 +7,6 @@
         }
     },
     "require": {
-    	"wildfire/core": "^1.1"
+    	"wildfire/core": "^2.1"
     }
 }
