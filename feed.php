@@ -27,21 +27,24 @@ $generator = $rss->addChild('generator','tribe-rss-feed-v2-xml'); //add generato
 $ids = $sql->executeSQL("SELECT `id` FROM `data` WHERE `content_privacy`='public' AND `type` IN ('".implode("', '", $types['webapp']['feedable_types'])."') ORDER BY `id` DESC LIMIT 20");
 $posts = $dash->getObjects($ids);
 
-foreach ($posts as $post) {
 
+foreach ($posts as $post) {
     $field_title = $types[$post['type']]['headmeta_title'];
     $field_description = $types[$post['type']]['headmeta_description'];
+    
+    if ($post[$field_title]) {
 
-    $item = $rss->addChild('item'); //add item node
-    $title = $item->addChild('title', $post[$field_title]); //add title node under item
-    $link = $item->addChild('link', BASE_URL.'/'.$post['type'].'/'.$post['slug']); //add link node under item
-    $guid = $item->addChild('guid', BASE_URL.'/'.$post['type'].'/'.$post['slug']); //add guid node under item
-    $guid->addAttribute('isPermaLink', 'true'); //add guid node attribute
-    
-    $description = $item->addChild('description', '<![CDATA['. htmlentities($post[$field_description]) . ']]>'); //add description
-    
-    $date_rfc = gmdate(DATE_RFC2822, $post['updated_on']);
-    $item = $item->addChild('pubDate', $date_rfc); //add pubDate node
+        $item = $channel->addChild('item'); //add item node
+        $title = $item->addChild('title', $post[$field_title]); //add title node under item
+        $link = $item->addChild('link', BASE_URL.'/'.$post['type'].'/'.$post['slug']); //add link node under item
+        $guid = $item->addChild('guid', BASE_URL.'/'.$post['type'].'/'.$post['slug']); //add guid node under item
+        $guid->addAttribute('isPermaLink', 'true'); //add guid node attribute
+        
+        $description = $item->addChild('description', '<![CDATA['. htmlentities($post[$field_description]) . ']]>'); //add description
+        
+        $date_rfc = gmdate(DATE_RFC2822, $post['updated_on']);
+        $item = $item->addChild('pubDate', $date_rfc); //add pubDate node
+    }
 
 }
 
